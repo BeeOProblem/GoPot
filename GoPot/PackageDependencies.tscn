@@ -1,0 +1,102 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkxh1lwk720i1"]
+
+[sub_resource type="SystemFont" id="SystemFont_w01oc"]
+font_weight = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6uggq"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="PackageDependencies" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 800
+
+[node name="AvailablePackagesSection" type="MarginContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/AvailablePackagesSection"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="HSplitContainer/AvailablePackagesSection/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_w01oc")
+text = "Available Packages"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/AvailablePackagesSection/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_6uggq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/AvailablePackagesSection/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HSplitContainer/AvailablePackagesSection/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "[No packages available]"
+
+[node name="Buttons" type="HBoxContainer" parent="HSplitContainer/AvailablePackagesSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="Add" type="Button" parent="HSplitContainer/AvailablePackagesSection/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Add Selected"
+
+[node name="UsedPackagesSection" type="MarginContainer" parent="HSplitContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/UsedPackagesSection"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="HSplitContainer/UsedPackagesSection/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_w01oc")
+text = "Dependencies"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/UsedPackagesSection/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_6uggq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "[No packages in project]"
+
+[node name="Buttons" type="HBoxContainer" parent="HSplitContainer/UsedPackagesSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="Remove" type="Button" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Remove Selected"
+
+[node name="Close" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Close"

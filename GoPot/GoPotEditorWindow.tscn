@@ -1,0 +1,175 @@
+[gd_scene load_steps=9 format=3 uid="uid://dohkcmjqondew"]
+
+[ext_resource type="Script" path="res://addons/GoPot/GoPotEditorWindow.cs" id="1_or3x1"]
+[ext_resource type="PackedScene" uid="uid://cvhvvm6pmd4j7" path="res://addons/GoPot/PackageWidget.tscn" id="2_34irh"]
+[ext_resource type="PackedScene" uid="uid://d0asrygoghmrl" path="res://addons/GoPot/ConfigureGoPot.tscn" id="2_rqyt1"]
+[ext_resource type="PackedScene" uid="uid://k60c6leyouc1" path="res://addons/GoPot/PromptDialog.tscn" id="4_ml8kg"]
+[ext_resource type="PackedScene" uid="uid://bvhkfyic5isx6" path="res://addons/GoPot/GoPotManifestWindow.tscn" id="5_cbjoq"]
+[ext_resource type="PackedScene" uid="uid://v5tbyhhrtjkx" path="res://addons/GoPot/PackagesDragWidget.tscn" id="5_dr7m8"]
+
+[sub_resource type="SystemFont" id="SystemFont_nrawx"]
+font_weight = 800
+subpixel_positioning = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c3d8n"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="GoPotEditorWindow" type="Control" node_paths=PackedStringArray("AcceptDialog", "PromptDialog", "ManifestDialog", "DragWidget", "AvailablePackagesContainer", "AvailablePackagesDragTarget", "AvailablePackagesEmptyLabel", "UserPackagesContainer", "UserPackagesDragTarget", "UserPackagesEmptyLabel")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_or3x1")
+ConfigureWindow = ExtResource("2_rqyt1")
+AcceptDialog = NodePath("AcceptDialog")
+PromptDialog = NodePath("PromptDialog")
+ManifestDialog = NodePath("GoPotManifestWindow")
+PackageWidgetScene = ExtResource("2_34irh")
+DragWidget = NodePath("PackagesDragWidget")
+AvailablePackagesContainer = NodePath("HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer")
+AvailablePackagesDragTarget = NodePath("HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/ScrollContainer")
+AvailablePackagesEmptyLabel = NodePath("HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer/NoAvailablePackages")
+UserPackagesContainer = NodePath("HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer/VBoxContainer")
+UserPackagesDragTarget = NodePath("HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer")
+UserPackagesEmptyLabel = NodePath("HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer/VBoxContainer/NoUsedPackages")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "GoPot"
+initial_position = 2
+size = Vector2i(200, 100)
+borderless = true
+popup_window = true
+dialog_text = "Something went wrong!"
+
+[node name="PromptDialog" parent="." instance=ExtResource("4_ml8kg")]
+initial_position = 2
+visible = false
+
+[node name="GoPotManifestWindow" parent="." instance=ExtResource("5_cbjoq")]
+visible = false
+
+[node name="PackagesDragWidget" parent="." node_paths=PackedStringArray("EditorWindow") instance=ExtResource("5_dr7m8")]
+visible = false
+z_index = 1
+layout_mode = 1
+EditorWindow = NodePath("..")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 800
+
+[node name="AvailablePackagesSection" type="MarginContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer/AvailablePackagesSection"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/AvailablePackagesSection/MarginContainer"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_nrawx")
+text = "Available Packages"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_c3d8n")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NoAvailablePackages" type="Label" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+text = "[No packages available]"
+
+[node name="Buttons" type="HBoxContainer" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Create" type="Button" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Create"
+
+[node name="Rename" type="Button" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Rename"
+
+[node name="ManageDependencies" type="Button" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/Buttons"]
+visible = false
+layout_mode = 2
+text = "Dependencies..."
+
+[node name="Add" type="Button" parent="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Add to Project"
+
+[node name="UsedPackagesSection" type="MarginContainer" parent="HSplitContainer"]
+custom_minimum_size = Vector2(450, 0)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/UsedPackagesSection"]
+layout_mode = 2
+
+[node name="SectionTitle" type="Label" parent="HSplitContainer/UsedPackagesSection/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_nrawx")
+text = "Packages In Project"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/UsedPackagesSection/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_c3d8n")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NoUsedPackages" type="Label" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/ScrollContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 6
+text = "[No packages in project]"
+
+[node name="Buttons" type="HBoxContainer" parent="HSplitContainer/UsedPackagesSection/VBoxContainer"]
+layout_mode = 2
+
+[node name="UpdateLinks" type="Button" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Update Symlinks"
+
+[node name="Remove" type="Button" parent="HSplitContainer/UsedPackagesSection/VBoxContainer/Buttons"]
+layout_mode = 2
+text = "Remove from Project"
+
+[node name="Configure" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -149.0
+offset_top = -31.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Configure GoPot..."
+
+[connection signal="pressed" from="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/Buttons/Create" to="." method="OnCreateClicked"]
+[connection signal="pressed" from="HSplitContainer/AvailablePackagesSection/MarginContainer/VBoxContainer/Buttons/Add" to="." method="OnAddClicked"]
+[connection signal="pressed" from="HSplitContainer/UsedPackagesSection/VBoxContainer/Buttons/Remove" to="." method="OnRemoveClicked"]
+[connection signal="pressed" from="Configure" to="." method="OnConfigureClicked"]

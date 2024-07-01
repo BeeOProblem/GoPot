@@ -1,0 +1,165 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvhkfyic5isx6"]
+
+[ext_resource type="Script" path="res://addons/GoPot/GoPotManifestWindow.cs" id="1_66gr6"]
+[ext_resource type="PackedScene" uid="uid://cvhvvm6pmd4j7" path="res://addons/GoPot/PackageWidget.tscn" id="2_dobp3"]
+[ext_resource type="PackedScene" uid="uid://v5tbyhhrtjkx" path="res://addons/GoPot/PackagesDragWidget.tscn" id="3_v24gm"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_14jy5"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+
+[node name="GoPotManifestWindow" type="Window" node_paths=PackedStringArray("PackageDirectoryName", "PackageName", "DragWidget", "AvailablePackagesContainer", "AvailablePackagesDragTarget", "AvailablePackagesEmptyLabel", "DependencyPackagesContainer", "DependencyPackagesDragTarget", "DependencyPackagesEmptyLabel")]
+title = "Package Manifest"
+initial_position = 2
+size = Vector2i(800, 300)
+transient = true
+script = ExtResource("1_66gr6")
+PackageDirectoryName = NodePath("MarginContainer/VBoxContainer/GridContainer/DirMargin/PackageDirName")
+PackageName = NodePath("MarginContainer/VBoxContainer/GridContainer/NameMargin/PackageDescriptiveName")
+PackageWidgetScene = ExtResource("2_dobp3")
+DragWidget = NodePath("PackagesDragWidget")
+AvailablePackagesContainer = NodePath("MarginContainer/VBoxContainer/HSplitContainer/Available/AvailableList/VBoxContainer")
+AvailablePackagesDragTarget = NodePath("MarginContainer/VBoxContainer/HSplitContainer/Available/AvailableList")
+AvailablePackagesEmptyLabel = NodePath("MarginContainer/VBoxContainer/HSplitContainer/Available/AvailableList/VBoxContainer/Label")
+DependencyPackagesContainer = NodePath("MarginContainer/VBoxContainer/HSplitContainer/Depends/DependenciesList/VBoxContainer")
+DependencyPackagesDragTarget = NodePath("MarginContainer/VBoxContainer/HSplitContainer/Depends/DependenciesList")
+DependencyPackagesEmptyLabel = NodePath("MarginContainer/VBoxContainer/HSplitContainer/Depends/DependenciesList/VBoxContainer/Label")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+title = "GoPot"
+initial_position = 2
+size = Vector2i(200, 100)
+borderless = true
+popup_window = true
+dialog_text = "Something went wrong!"
+
+[node name="PackagesDragWidget" parent="." instance=ExtResource("3_v24gm")]
+visible = false
+z_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="DirLabel" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Package Directory"
+
+[node name="DirMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+
+[node name="PackageDirName" type="Label" parent="MarginContainer/VBoxContainer/GridContainer/DirMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SomeDirectoryName"
+
+[node name="NameLable" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Package Name"
+
+[node name="NameMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 8
+
+[node name="PackageDescriptiveName" type="LineEdit" parent="MarginContainer/VBoxContainer/GridContainer/NameMargin"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+split_offset = 400
+
+[node name="Available" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/Available"]
+layout_mode = 2
+text = "Available Packages"
+
+[node name="AvailableList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/Available"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_14jy5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/Available/AvailableList"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/Available/AvailableList/VBoxContainer"]
+layout_mode = 2
+text = "[No packages available]"
+
+[node name="AddButton" type="Button" parent="MarginContainer/VBoxContainer/HSplitContainer/Available"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Add"
+
+[node name="Depends" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/Depends"]
+layout_mode = 2
+text = "Depends on..."
+
+[node name="DependenciesList" type="ScrollContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/Depends"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_14jy5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HSplitContainer/Depends/DependenciesList"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HSplitContainer/Depends/DependenciesList/VBoxContainer"]
+layout_mode = 2
+text = "[No dependencies]"
+
+[node name="RemoveButton" type="Button" parent="MarginContainer/VBoxContainer/HSplitContainer/Depends"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Remove"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="OK" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "OK"
+
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Cancel"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HSplitContainer/Available/AddButton" to="." method="OnAddClicked"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HSplitContainer/Depends/RemoveButton" to="." method="OnRemoveClicked"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/OK" to="." method="OnOkClicked"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/Cancel" to="." method="OnCancelClicked"]

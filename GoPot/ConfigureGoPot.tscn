@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0asrygoghmrl"]
+
+[ext_resource type="Script" path="res://addons/GoPot/ConfigureGoPot.cs" id="1_6qxj7"]
+
+[node name="Configure" type="Popup" node_paths=PackedStringArray("PackagePath")]
+title = "Configure GoPot"
+initial_position = 2
+size = Vector2i(500, 130)
+visible = true
+borderless = false
+script = ExtResource("1_6qxj7")
+PackagePath = NodePath("MarginContainer/VBoxContainer/GridContainer/RootPath")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="RootPathLabel" type="Label" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Package Root Path"
+
+[node name="RootPath" type="LineEdit" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "C:\\Users\\DAAAN!\\Documents\\Perforce\\PrimaryWS\\GoPotPackages"
+placeholder_text = "Please fill in"
+
+[node name="FindRootPath" type="Button" parent="MarginContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Browse..."
+
+[node name="Spacer" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/Actions"]
+layout_mode = 2
+text = "Cancel"
+
+[node name="OK" type="Button" parent="MarginContainer/VBoxContainer/Actions"]
+layout_mode = 2
+text = "OK"
+
+[node name="FolderFinder" type="FileDialog" parent="."]
+
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/GridContainer/RootPath" to="." method="OnTextSubmitted"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Actions/Cancel" to="." method="OnCancelClicked"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Actions/OK" to="." method="OnOkClicked"]

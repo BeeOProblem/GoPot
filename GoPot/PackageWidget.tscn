@@ -1,0 +1,52 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvhvvm6pmd4j7"]
+
+[ext_resource type="Script" path="res://addons/GoPot/PackageWidget.cs" id="1_gv1gb"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bfs24"]
+size = Vector2(20, 20)
+
+[node name="PackageWidget" type="MarginContainer" node_paths=PackedStringArray("PackageName", "SelectedCheckbox", "BackgroundColor", "EditManifestButton")]
+mouse_filter = 0
+mouse_default_cursor_shape = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+script = ExtResource("1_gv1gb")
+PackageName = NodePath("HBoxContainer/PackageName")
+SelectedCheckbox = NodePath("HBoxContainer/Selected")
+BackgroundColor = NodePath("BackgroundColor")
+EditManifestButton = NodePath("HBoxContainer/EditManifest")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+layout_mode = 2
+mouse_filter = 1
+color = Color(1, 1, 1, 0)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Selected" type="CheckBox" parent="HBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+
+[node name="PackageName" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+text = "This is a Package"
+
+[node name="EditManifest" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "..."
+
+[node name="DragHint" type="TextureRect" parent="HBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+size_flags_horizontal = 8
+texture = SubResource("PlaceholderTexture2D_bfs24")
+
+[connection signal="toggled" from="HBoxContainer/Selected" to="." method="OnToggled"]
+[connection signal="pressed" from="HBoxContainer/EditManifest" to="." method="OnEditManifestClicked"]
